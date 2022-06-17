@@ -132,7 +132,8 @@ const accountCenterPosition = Joi.string().valid(
 
 const notify = Joi.object({
   transactionHandler: Joi.function(),
-  enabled: Joi.boolean()
+  enabled: Joi.boolean(),
+  position: accountCenterPosition
 })
 
 const initOptions = Joi.object({

@@ -1,4 +1,5 @@
 import { configuration } from './configuration'
+import { updateAccountCenter } from './store/actions'
 import type { AppState } from './types'
 
 export const APP_INITIAL_STATE: AppState = {
@@ -13,7 +14,8 @@ export const APP_INITIAL_STATE: AppState = {
   },
   notify: {
     enabled: true,
-    transactionHandler: () => {}
+    transactionHandler: () => {},
+    position: 'topRight'
   },
   notifications: [],
   locale: ''

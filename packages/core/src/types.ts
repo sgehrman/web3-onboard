@@ -159,6 +159,11 @@ export type NotifyOptions = {
    * default: true
    */
   enabled: boolean
+    /**
+   * Defines whether whether to subscribe to transaction events or not
+   * default: true
+   */
+  position: AccountCenterPosition
   /**
    * Callback that receives all transaction events
    * Return a custom notification based on the event

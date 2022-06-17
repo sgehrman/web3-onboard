@@ -8,6 +8,8 @@
   import AccountCenter from './account-center/Index.svelte'
   import Notify from './notify/Index.svelte'
   import { configuration } from '../configuration'
+  import { fix_position } from 'svelte/internal'
+  import Agreement from './connect/Agreement.svelte'
 
   const { device } = configuration
   const accountCenter$ = state
@@ -17,6 +19,8 @@
   const notify$ = state
     .select('notify')
     .pipe(startWith(state.get().notify), shareReplay(1))
+  accountCenter$.subscribe(e => console.log(e))
+  notify$.subscribe(e => console.log(e))
 
   const accountCenterPositions = {
     topLeft: 'top: 0; left: 0;',
@@ -278,34 +282,50 @@
 {#if ($notify$.enabled || $accountCenter$.enabled) && $wallets$.length}
   <div
     class="container flex flex-column fixed"
-    style="{accountCenterPositions[$accountCenter$.position]}; {device.type ===
-      'mobile' && $accountCenter$.position.includes('top')
+    style="{accountCenterPositions[
+      $accountCenter$.enabled ? $accountCenter$.position : $notify$.position
+    ]}; {(
+      $accountCenter$.enabled
+        ? $accountCenter$.position.includes('top')
+        : $notify$.position.includes('top')
+    )
       ? 'padding-bottom: 0;'
-      : device.type === 'mobile' && $accountCenter$.position.includes('bottom')
+      : device.type === 'mobile' &&
+        ($accountCenter$.enabled
+          ? $accountCenter$.position.includes('bottom')
+          : $notify$.position.includes('top'))
       ? 'padding-top:0;'
       : ''} "
   >
-    {#if $notify$.enabled && $accountCenter$.position.includes('bottom')}
-      <Notify position={$accountCenter$.position} />
+    {#if $notify$.enabled && ($accountCenter$.enabled ? $accountCenter$.position.includes('bottom') : $notify$.position.includes('bottom'))}
+      <Notify
+        position={$accountCenter$.enabled
+          ? $accountCenter$.position
+          : $notify$.position}
+      />
     {/if}
-    <div
-      style={!$accountCenter$.expanded &&
-      $accountCenter$.minimal &&
-      $accountCenter$.position.includes('Right')
-        ? 'margin-left: auto'
-        : !$accountCenter$.expanded &&
-          $accountCenter$.minimal &&
-          $accountCenter$.position.includes('Left')
-        ? 'margin-right: auto'
-        : ''}
-    >
-      {#if $accountCenter$.enabled && $wallets$.length}
+    {#if $accountCenter$.enabled && $wallets$.length}
+      <div
+        style={!$accountCenter$.expanded &&
+        $accountCenter$.minimal &&
+        $accountCenter$.position.includes('Right')
+          ? 'margin-left: auto'
+          : !$accountCenter$.expanded &&
+            $accountCenter$.minimal &&
+            $accountCenter$.position.includes('Left')
+          ? 'margin-right: auto'
+          : ''}
+      >
         <AccountCenter settings={$accountCenter$} />
-      {/if}
-    </div>
+      </div>
+    {/if}
 
-    {#if $notify$.enabled && $accountCenter$.position.includes('top')}
-      <Notify position={$accountCenter$.position} />
+    {#if $notify$.enabled && ($accountCenter$.enabled ? $accountCenter$.position.includes('top') : $notify$.position.includes('top'))}
+      <Notify
+        position={$accountCenter$.enabled
+          ? $accountCenter$.position
+          : $notify$.position}
+      />
     {/if}
   </div>
 {/if}

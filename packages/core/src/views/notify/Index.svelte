@@ -58,7 +58,7 @@
       var(--onboard-font-size-5, var(--font-size-5))
     );
     list-style-type: none;
-    max-height: calc(100vh - 76px);
+    max-height: calc(100vh - 82px);
     overflow: visible;
     scrollbar-width: none;
     box-sizing: border-box;
