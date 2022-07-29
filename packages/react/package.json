@@ -63,7 +63,7 @@
   },
   "dependencies": {
     "@web3-onboard/core": "sgehrman/web3-onboard#release/2.6.0",
-    "@web3-onboard/common": "^2.1.7",
+    "@web3-onboard/common": "^2.1.6",
     "use-sync-external-store": "1.0.0"
   },
   "peerDependencies": {
