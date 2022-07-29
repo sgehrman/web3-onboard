@@ -62,7 +62,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@web3-onboard/core": "^2.6.0",
+    "@web3-onboard/core": "sgehrman/web3-onboard#release/2.6.0",
     "@web3-onboard/common": "^2.1.7",
     "use-sync-external-store": "1.0.0"
   },
